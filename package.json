@@ -1,0 +1,9 @@
+{
+  "name": "dream-react-modal",
+  "version": "0.1.0",
+  "description": "一个简单好用的react-modal组件,支持动画",
+  "main": "index.js",
+  "repository": "git@github.com:blackrabbit944/dream-react-modal.git",
+  "author": "blackrabbit",
+  "license": "GPL"
+}
