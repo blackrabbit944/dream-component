@@ -1,0 +1,97 @@
+import { Meta, Story, Canvas } from '@storybook/addon-docs';
+import MaskBg from './../maskbg';
+import { useState } from 'react';
+
+<Meta
+    title="Example/MaskBg"
+    component={MaskBg}
+    argTypes={{
+        opacity: { control: { type: 'number', min: 0, max: 100, step: 5 } },
+        visible: { control: 'boolean' },
+        bgColor: {
+            control: {
+                type: 'color',
+                presetColors: ['#000', '#fff']
+            }
+        },
+        onClick: { action: 'onClick' }
+    }}
+/>
+
+# 覆盖层组件
+
+## 基础用法
+
+```tsx
+import { MaskBg } from 'dream-components/maskbg';
+
+export const MyComponent = (args) => {
+    return <Mask visible={true} opacity={70} />;
+};
+```
+
+export const Template = (args) => {
+    let [visible, setVisible] = useState(false);
+    args['visible'] = visible;
+    console.log('args', args);
+    return (
+        <div>
+            <div>这里是一些背景文字</div>
+            <div>这里是一些背景文字</div>
+            <MaskBg {...args} />
+            {visible ? (
+                <div
+                    style={{
+                        position: 'absolute',
+                        bottom: '40%',
+                        left: '50%'
+                    }}
+                >
+                    <button
+                        onClick={() => {
+                            setVisible(false);
+                            console.log('关闭弹窗');
+                        }}
+                    >
+                        关闭弹窗
+                    </button>
+                </div>
+            ) : (
+                <div>
+                    <button
+                        onClick={() => {
+                            setVisible(true);
+                        }}
+                    >
+                        打开弹窗
+                    </button>
+                </div>
+            )}
+        </div>
+    );
+};
+
+<Canvas>
+    <Story
+        name="Basic"
+        args={{
+            bgColor: '#f00',
+            opacity: 20,
+            visible: true
+        }}
+    >
+        {Template.bind({})}
+    </Story>
+</Canvas>
+
+## 关闭事件和关闭回调
+
+```tsx
+import { MaskBg } from 'dream-components/maskbg';
+
+export const MyComponent = (args) => {
+    return <Mask visible={true} opacity={70} />;
+};
+```
+
+;

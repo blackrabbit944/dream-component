@@ -9,3 +9,16 @@ body {
 code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
+
+.dream-btn {
+    background-color: #fff;
+    border: none;
+    color: slateblue;
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    border-radius: 0.125rem;
+}
+.dream-btn:hover {
+    background-color: #f4f4f4;
+}
