@@ -130,7 +130,7 @@ class ModalClass extends React.Component<ModalProps> {
                 modalStyle['marginTop'] = '100px';
             }
         }
-        const modalWrapperStyle = {};
+        const modalWrapperStyle: React.CSSProperties = {};
         if (zIndex && zIndex > 0) {
             modalWrapperStyle['zIndex'] = zIndex;
         }
