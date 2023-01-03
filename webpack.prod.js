@@ -27,7 +27,8 @@ module.exports = merge(webpackBaseConfig, {
         path: path.resolve(basePath, './lib'),
         libraryTarget: 'umd',
         library: '[name]',
-        libraryExport: 'default'
+        libraryExport: 'default',
+        globalObject: 'this'
     },
     externals: {
         react: 'react',
