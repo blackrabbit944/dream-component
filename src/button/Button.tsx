@@ -57,7 +57,7 @@ const ButtonClass: React.FC<ButtonProps> = (props) => {
                 'type-' + type,
                 'size-' + size,
                 {
-                    outline: outline
+                    'dream-btn-outline': outline
                 },
                 {
                     rounded: rounded

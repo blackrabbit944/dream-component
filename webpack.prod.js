@@ -32,6 +32,6 @@ module.exports = merge(webpackBaseConfig, {
     },
     externals: {
         react: 'react',
-        'react-dom': 'ReactDOM'
+        'react-dom': 'react-dom'
     }
 });
