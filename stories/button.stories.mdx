@@ -1,0 +1,131 @@
+import { Meta, Story, Canvas } from '@storybook/addon-docs';
+import Button, { ButtonProps } from './../src/button';
+import { useState } from 'react';
+
+<Meta title="组件/Button" component={Button} />
+
+# Button
+
+1. 支持多种样式
+
+-   内部填充样式
+-   描边样式
+
+2. 支持 disabled
+3. 支持展示 Loading 的动画
+
+export const Basic = (args) => (
+    <div style={{ margin: '0 12px', display: 'inline-block' }}>
+        <Button {...args} />
+    </div>
+);
+
+## 基础用法
+
+```tsx
+import { Button } from 'dream-component';
+
+export const MyComponent = (args) => {
+    return <Button />;
+};
+```
+
+<Canvas>
+    <Story name="基础用法">
+        <Basic type="primary">按钮</Basic>
+        <Basic type="secondary">按钮</Basic>
+        <Basic type="default">按钮</Basic>
+        <Basic type="danger">按钮</Basic>
+    </Story>
+</Canvas>
+
+## 外描边样式
+
+<Canvas>
+    <Story name="外描边样式">
+        <Basic type="primary" outline={true}>
+            按钮
+        </Basic>
+        <Basic type="secondary" outline={true}>
+            按钮
+        </Basic>
+        <Basic type="default" outline={true}>
+            按钮
+        </Basic>
+        <Basic type="danger" outline={true}>
+            按钮
+        </Basic>
+    </Story>
+</Canvas>
+
+## 圆角模式
+
+<Canvas>
+    <Story name="圆角模式">
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+            <Basic type="primary" rounded={true} outline={true}>
+                按钮
+            </Basic>
+            <Basic type="secondary" rounded={true}>
+                按钮
+            </Basic>
+            <Basic type="default" outline={true} rounded={true} loading={true}>
+                按钮
+            </Basic>
+            <Basic type="danger" outline={true} rounded={true} loading={true} size={'small'}>
+                按钮
+            </Basic>
+        </div>
+    </Story>
+</Canvas>
+
+## 不可点样式
+
+<Canvas>
+    <Story name="不可点样式">
+        <Basic type="primary" disabled={true}>
+            纯色不可点
+        </Basic>
+        <Basic type="secondary" outline={true} disabled={true}>
+            外描边不可点
+        </Basic>
+    </Story>
+</Canvas>
+
+## 展示 loading 动画
+
+<Canvas>
+    <Story name="展示 loading 动画">
+        <Basic type="primary" loading={true}>
+            primary
+        </Basic>
+        <Basic type="secondary" loading={true}>
+            primary
+        </Basic>
+        <Basic type="danger" outline={true} loading={true}>
+            danger
+        </Basic>
+        <Basic outline={true} loading={true}>
+            danger
+        </Basic>
+    </Story>
+</Canvas>
+
+## size
+
+<Canvas>
+    <Story name="size">
+        <Basic type="danger" outline={true} loading={true} size={'xsmall'}>
+            primary
+        </Basic>
+        <Basic type="danger" outline={true} loading={true} size={'small'}>
+            secondary
+        </Basic>
+        <Basic type="danger" outline={true} loading={true} size={'middle'}>
+            danger
+        </Basic>
+        <Basic type="danger" outline={true} loading={true} size={'large'}>
+            danger
+        </Basic>
+    </Story>
+</Canvas>

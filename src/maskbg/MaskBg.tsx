@@ -11,7 +11,6 @@ export interface MaskBgProps extends React.HTMLAttributes<HTMLElement> {
     onClick?: (e: SyntheticEvent) => void; //点击事件
     afterClose?: () => any; //关闭以后的回调事件
 
-    opacity?: number; ///透明度可选是0-100
     bgColor?: string; ///颜色属性,可选是所有的颜色比如#ffffff
     zIndex?: number; //弹窗的zindex属性
     visible?: boolean; //是否可见
@@ -24,7 +23,6 @@ const MaskBg: React.FC<MaskBgProps> = (props) => {
         className = '',
         style = {},
         animation = MaskBgAnimation.fade,
-        opacity = 80,
         zIndex = 10,
         visible = false,
         bgColor = '#000',
@@ -32,8 +30,10 @@ const MaskBg: React.FC<MaskBgProps> = (props) => {
         afterClose
     } = props;
 
-    // style['opacity'] = opacity / 100;
     style['backgroundColor'] = bgColor;
+    if (zIndex) {
+        style['zIndex'] = zIndex;
+    }
 
     const handleClick = (e: SyntheticEvent): any => {
         if (onClick) {

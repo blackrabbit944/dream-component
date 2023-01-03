@@ -1,28 +1,29 @@
+import './Button.css';
+
 import classNames from 'classnames';
 import React from 'react';
-
-import style from './Button.module.css';
 
 export interface ButtonProps extends React.HTMLAttributes<any> {
     loading?: boolean;
     children?: React.ReactNode | string;
     type?: 'primary' | 'secondary' | 'default' | 'danger' | 'link' | 'text';
-    size?: 'large' | 'middle' | 'small';
+    size?: 'large' | 'middle' | 'small' | 'xsmall';
     outline?: boolean;
     disabled?: boolean;
+    rounded?: boolean;
     onClick?: (e: React.MouseEvent) => void;
 }
 
 const LoadingSvg: React.FC<{ className: string }> = (props) => {
     return (
         <svg
-            className={classNames(style['animate-spin'], style['dream-btn-icon'], props.className)}
+            className={classNames('animate-spin', 'dream-btn-icon', props.className)}
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
         >
             <circle
-                className={style['opacity-25']}
+                className={'opacity-25'}
                 cx="12"
                 cy="12"
                 r="10"
@@ -30,7 +31,7 @@ const LoadingSvg: React.FC<{ className: string }> = (props) => {
                 strokeWidth="4"
             ></circle>
             <path
-                className={style['opacity-75']}
+                className={'opacity-75'}
                 fill="currentColor"
                 d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
             ></path>
@@ -45,20 +46,24 @@ const ButtonClass: React.FC<ButtonProps> = (props) => {
         size = 'middle',
         disabled = false,
         outline = false,
+        rounded = false,
         ...restProps
     } = props;
 
     return (
         <button
             className={classNames(
-                style['dream-btn'],
-                style['type-' + type],
-                style['size-' + size],
+                'dream-btn',
+                'type-' + type,
+                'size-' + size,
                 {
-                    [style.outline]: outline
+                    outline: outline
                 },
-                { [style.disabled]: disabled },
-                { [style.loading]: loading }
+                {
+                    rounded: rounded
+                },
+                { disabled: disabled },
+                { loading: loading }
             )}
             {...restProps}
         >

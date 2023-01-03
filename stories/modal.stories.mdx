@@ -1,0 +1,125 @@
+import { Meta, Story, Canvas } from '@storybook/addon-docs';
+import Modal, { ModalProps } from './../src/modal';
+import Button, { ButtonProps } from './../src/button';
+
+import { useState } from 'react';
+
+<Meta title="组件/Modal" component={Modal} />
+
+# Modal
+
+1. 支持 fade 或 slideIn 两种动画
+2. 支持只依靠 footer 的按钮控制关闭
+3. 支持 ESC 键或 MaskBg 点击关闭
+
+export const Basic = (args) => {
+    let [visible, setVisible] = useState(false);
+    return (
+        <div style={{ margin: '0 12px', display: 'inline-block' }}>
+            <Modal
+                {...args}
+                visible={visible}
+                onClose={() => {
+                    setVisible(false);
+                }}
+            >
+                🚀 这里是内容区域
+            </Modal>
+            <Button
+                onClick={() => {
+                    setVisible(true);
+                }}
+            >
+                {args.children}
+            </Button>
+        </div>
+    );
+};
+
+## 基础用法
+
+```tsx
+import { Button } from 'dream-component';
+
+export const MyComponent = (args) => {
+    return <Button />;
+};
+```
+
+<Canvas>
+    <Story name="基础用法">
+        <Basic title={'基础弹窗'}>点击展开modal</Basic>
+    </Story>
+</Canvas>
+
+## 两种动画
+
+<Canvas>
+    <Story name="两种动画">
+        <Basic title={'淡入淡出'} animation="fade">
+            淡入淡出
+        </Basic>
+        <Basic title={'从上到下滑入'} animation="slideIn">
+            从上到下滑入
+        </Basic>
+    </Story>
+</Canvas>
+
+## 弹窗位置
+
+<Canvas>
+    <Story name="弹窗位置">
+        <Basic title={'距离顶部40像素'} marginTop={'40px'} position={'top'}>
+            距离顶部40像素
+        </Basic>
+        <Basic title={'距离顶部100像素'} marginTop={'100px'} position={'top'}>
+            距离顶部100像素
+        </Basic>
+    </Story>
+</Canvas>
+
+## 自定义背景颜色
+
+背景色的透明度请修改 CSS
+
+<Canvas>
+    <Story name="自定义背景颜色">
+        <Basic title={'背景色为白色'} marginTop={'100px'} position={'top'} maskBgColor={'#fff'}>
+            背景色为白色
+        </Basic>
+        <Basic title={'背景色为红色'} marginTop={'100px'} position={'top'} maskBgColor={'#f00'}>
+            背景色为红色
+        </Basic>
+    </Story>
+</Canvas>
+
+## 其他高级用法
+
+<Canvas>
+    <Story name="其他高级用法">
+        <Basic
+            title={'点击mask不可关闭'}
+            marginTop={'100px'}
+            position={'top'}
+            maskBgColor={'#000'}
+            maskCloseable={false}
+        >
+            点击mask不可关闭
+        </Basic>
+        <Basic
+            title={'采用footer按钮控制关闭'}
+            marginTop={'100px'}
+            position={'top'}
+            maskBgColor={'#f00'}
+            useFooterButtonClose={true}
+            onConfirm={() => {
+                console.log('点击了confirm');
+            }}
+            onCancel={() => {
+                console.log('点击了cancel');
+            }}
+        >
+            采用footer按钮控制关闭
+        </Basic>
+    </Story>
+</Canvas>

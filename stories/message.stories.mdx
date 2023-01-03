@@ -1,0 +1,90 @@
+import { Meta, Story, Canvas } from '@storybook/addon-docs';
+import Message from './../src/message';
+import Button, { ButtonProps } from './../src/button';
+
+import { useState } from 'react';
+
+<Meta title="组件/Message" component={Message} />
+
+# Message
+
+1. 支持多种 icon 类型的消息通知
+2. loading 消息可通过回调函数关闭
+
+export const Basic = (args) => {
+    return (
+        <div style={{ margin: '0 12px', display: 'inline-block' }}>
+            <Button onClick={args.onClick}>{args.children}</Button>
+        </div>
+    );
+};
+
+## 基础用法
+
+```tsx
+import { Button } from 'dream-component';
+
+export const MyComponent = (args) => {
+    return <Button />;
+};
+```
+
+<Canvas>
+    <Story name="基础用法">
+        <Basic
+            onClick={() => {
+                Message.info('简单消息通知');
+            }}
+        >
+            简单消息通知
+        </Basic>
+    </Story>
+</Canvas>
+
+## 不同样式
+
+<Canvas>
+    <Story name="不同样式">
+        <Basic
+            onClick={() => {
+                Message.success('操作成功');
+            }}
+        >
+            成功
+        </Basic>
+        <Basic
+            onClick={() => {
+                Message.error('操作失败:用户不能为空');
+            }}
+        >
+            失败
+        </Basic>
+        <Basic
+            onClick={() => {
+                Message.warning('警告:当前网络可能拥堵巴拉巴拉');
+            }}
+        >
+            警告
+        </Basic>
+        <Basic
+            onClick={() => {
+                Message.info('信息:这里是简单的信息');
+            }}
+        >
+            信息
+        </Basic>
+        <Basic
+            onClick={() => {
+                let close = Message.loading('载入中...');
+                console.log('close', close);
+                setTimeout(() => {
+                    if (typeof close == 'function') {
+                        close();
+                    }
+                }, 2000);
+            }}
+        >
+            Loading
+        </Basic>
+    </Story>
+</Canvas>

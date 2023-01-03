@@ -5,10 +5,10 @@ import classNames from 'classnames';
 import { SyntheticEvent } from 'react';
 import React from 'react';
 import { CSSTransition } from 'react-transition-group';
-import MaskBg from 'src/maskbg/MaskBg';
 
 import Button from './../button/Button';
 import ReactPortal from './../common/ReactPortal';
+import MaskBg from './../maskbg/MaskBg';
 
 export interface ModalProps {
     onClose?: () => void; //关闭弹窗
@@ -44,12 +44,14 @@ class ModalClass extends React.Component<ModalProps> {
         maskOpacity: 80,
         maskBgColor: '#000',
         maskCloseable: true,
-        zIndex: 10,
+        zIndex: 50,
         visible: false,
         position: 'center',
         marginTop: '0px',
         width: 500,
-        animation: 'slideIn'
+        animation: 'slideIn',
+        cancelText: 'cancel',
+        confirmText: 'confirm'
     };
     modalRef: React.RefObject<HTMLDivElement>;
 
@@ -108,11 +110,11 @@ class ModalClass extends React.Component<ModalProps> {
             visible,
             position,
             marginTop,
-            width = 450,
+            width,
             animation,
-            useFooterButtonClose = false,
-            cancelText = '取消',
-            confirmText = '确定',
+            useFooterButtonClose,
+            cancelText,
+            confirmText,
             onCancel,
             onConfirm
         } = this.props;
@@ -127,6 +129,10 @@ class ModalClass extends React.Component<ModalProps> {
             } else {
                 modalStyle['marginTop'] = '100px';
             }
+        }
+        const modalWrapperStyle = {};
+        if (zIndex && zIndex > 0) {
+            modalWrapperStyle['zIndex'] = zIndex;
         }
 
         let animation_class = 'modal-slide-in';
@@ -144,9 +150,8 @@ class ModalClass extends React.Component<ModalProps> {
                 <div>
                     <MaskBg
                         visible={visible}
-                        opacity={maskOpacity}
                         bgColor={maskBgColor}
-                        zIndex={zIndex}
+                        zIndex={zIndex ? zIndex - 1 : 10}
                         animation={animation}
                     />
 
@@ -170,6 +175,7 @@ class ModalClass extends React.Component<ModalProps> {
                                     top: position == 'top'
                                 }
                             )}
+                            style={modalWrapperStyle}
                             onClick={maskCloseable ? this.handleClose : undefined}
                         >
                             <div
