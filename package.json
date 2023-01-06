@@ -1,6 +1,6 @@
 {
     "name": "dream-component",
-    "version": "0.1.5",
+    "version": "0.1.6",
     "description": "dream-component,封装常用的button,modal,message组件",
     "repository": {
         "type": "git",
@@ -21,7 +21,7 @@
         "start": "react-scripts start",
         "test": "react-scripts test",
         "eject": "react-scripts eject",
-        "build": "webpack --progress --config ./webpack.prod.js ",
+        "build": "ENV=production webpack --progress --config ./webpack.prod.js ",
         "build:report": "webpack --report --progress --config ./webpack.prod.js",
         "storybook": "start-storybook -p 6006 -s public",
         "build-storybook": "build-storybook -s public",
@@ -90,6 +90,7 @@
         "@typescript-eslint/parser": "^5.47.1",
         "babel-jest": "^29.3.1",
         "babel-plugin-named-exports-order": "^0.0.2",
+        "babel-plugin-transform-remove-console": "^6.9.4",
         "chromatic": "^6.14.0",
         "commitlint": "^17.3.0",
         "enzyme": "^3.11.0",
