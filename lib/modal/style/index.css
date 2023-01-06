@@ -223,6 +223,13 @@
     height: 1.5rem;
 }
 
+.dream-btn.full-width {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .dream-mask-bg {
     position: fixed;
     left: 0;
