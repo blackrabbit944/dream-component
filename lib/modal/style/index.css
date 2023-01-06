@@ -132,22 +132,22 @@
     border-color: #ff4949;
 }
 
-.outline {
+.dream-btn-outline {
     background-color: transparent;
 }
-.outline.type-default {
+.dream-btn-outline.type-default {
     color: #666;
     border-color: #666;
 }
-.outline.type-primary {
+.dream-btn-outline.type-primary {
     color: rgb(29, 155, 240);
     border-color: rgb(29, 155, 240);
 }
-.outline.type-secondary {
+.dream-btn-outline.type-secondary {
     color: #6366f1;
     border-color: #6366f1;
 }
-.outline.type-danger {
+.dream-btn-outline.type-danger {
     color: #ff4949;
     border-color: #ff4949;
 }
@@ -162,7 +162,7 @@
     border-color: #ccc;
     color: #888;
 }
-.outline.disabled {
+.dream-btn-outline.disabled {
     border-color: #aaa;
     color: #888;
 }

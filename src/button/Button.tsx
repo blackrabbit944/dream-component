@@ -11,6 +11,7 @@ export interface ButtonProps extends React.HTMLAttributes<any> {
     outline?: boolean;
     disabled?: boolean;
     rounded?: boolean;
+    full?: boolean;
     onClick?: (e: React.MouseEvent) => void;
 }
 
@@ -47,9 +48,11 @@ const ButtonClass: React.FC<ButtonProps> = (props) => {
         disabled = false,
         outline = false,
         rounded = false,
+        full = false,
         ...restProps
     } = props;
 
+    console.log('full', full);
     return (
         <button
             className={classNames(
@@ -63,7 +66,10 @@ const ButtonClass: React.FC<ButtonProps> = (props) => {
                     rounded: rounded
                 },
                 { disabled: disabled },
-                { loading: loading }
+                { loading: loading },
+                {
+                    'full-width': full
+                }
             )}
             {...restProps}
         >
