@@ -1,6 +1,6 @@
 {
     "name": "dream-component",
-    "version": "0.1.6",
+    "version": "0.1.7",
     "description": "dream-component,封装常用的button,modal,message组件",
     "repository": {
         "type": "git",
@@ -22,7 +22,7 @@
         "test": "react-scripts test",
         "eject": "react-scripts eject",
         "build": "ENV=production webpack --progress --config ./webpack.prod.js ",
-        "build:report": "webpack --report --progress --config ./webpack.prod.js",
+        "build:report": "ENV=production webpack --progress --config ./webpack.prod.js --report",
         "storybook": "start-storybook -p 6006 -s public",
         "build-storybook": "build-storybook -s public",
         "prettier": "prettier src --write",
@@ -99,6 +99,7 @@
         "eslint-plugin-react": "^7.31.11",
         "eslint-plugin-simple-import-sort": "^8.0.0",
         "eslint-plugin-unused-imports": "^2.0.0",
+        "html-webpack-plugin": "^5.5.0",
         "husky": "^8.0.2",
         "jest": "^29.3.1",
         "jest-environment-jsdom": "^29.3.1",

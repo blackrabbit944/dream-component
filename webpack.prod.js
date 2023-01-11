@@ -13,7 +13,8 @@ module.exports = merge(webpackBaseConfig, {
     entry: {
         button: path.resolve(basePath, `./src/button/index.tsx`),
         message: path.resolve(basePath, `./src/message/index.tsx`),
-        modal: path.resolve(basePath, `./src/modal/index.tsx`)
+        modal: path.resolve(basePath, `./src/modal/index.tsx`),
+        confirm: path.resolve(basePath, `./src/confirm/index.tsx`)
     },
     output: {
         // filename指定为一个方法可以拿到chunk.name，分别是'button1'和'button2'

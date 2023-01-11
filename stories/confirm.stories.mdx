@@ -1,0 +1,48 @@
+import { Meta, Story, Canvas } from '@storybook/addon-docs';
+import ConfirmModal from './../src/confirm';
+import Button, { ButtonProps } from './../src/button';
+
+import { useState } from 'react';
+
+<Meta title="组件/Confirm" component={ConfirmModal} />
+
+# ConfirmModal
+
+export const Basic = (args) => {
+    return (
+        <div style={{ margin: '0 12px', display: 'inline-block' }}>
+            <Button onClick={args.onClick}>{args.children}</Button>
+        </div>
+    );
+};
+
+## 基础用法
+
+```tsx
+import { ConfirmModal } from 'dream-component';
+
+export const MyComponent = (args) => {
+    return <ConfirmModal />;
+};
+```
+
+<Canvas>
+    <Story name="基础用法">
+        <Basic
+            onClick={() => {
+                ConfirmModal.init({});
+                ConfirmModal.show({
+                    content: '这里是确认方法',
+                    cancel: () => {
+                        console.log('取消了');
+                    },
+                    ok: () => {
+                        console.log('确认了');
+                    }
+                });
+            }}
+        >
+            基础用法
+        </Basic>
+    </Story>
+</Canvas>
