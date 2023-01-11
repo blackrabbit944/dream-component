@@ -10,6 +10,7 @@ import Modal, { ModalProps } from './../src/modal/index';
 const ModalExample: React.FC<ModalProps> = (props) => {
     const [visible, setVisible] = useState<boolean>(false);
 
+    Message.init({});
     return (
         <div className="App">
             <Button
@@ -241,9 +242,10 @@ function App() {
                         <Button
                             onClick={() => {
                                 const close = Message.loading('载入中...');
-                                setTimeout(() => {
-                                    close();
-                                }, 2000);
+                                close();
+                                // setTimeout(() => {
+                                //     close();
+                                // }, 2000);
                             }}
                         >
                             loading

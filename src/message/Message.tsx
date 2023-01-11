@@ -37,7 +37,7 @@ const Message = React.forwardRef<MessageRef, MessageBoxProps>((props, ref) => {
 
             const { key } = config;
 
-            console.log('debug-config', config);
+            // console.log('debug-config', config);
             // config['onClose'] = () => {
             //     onMessageClose(config['key']);
             // };
@@ -77,7 +77,7 @@ const Message = React.forwardRef<MessageRef, MessageBoxProps>((props, ref) => {
     }));
 
     return (
-        <MessageBox>
+        <MessageBox {...props}>
             {messageList.map((item, index) => {
                 return (
                     <MessageOne

@@ -35,7 +35,7 @@ function createNotification(props: MessageBoxProps = {}) {
     };
 
     const rooter = createRoot(element);
-    rooter.render(<Message ref={setNotificationInstance} />);
+    rooter.render(<Message ref={setNotificationInstance} {...props} />);
 
     return {
         addNotice(notice: addNoticeProps) {
@@ -77,7 +77,7 @@ interface noticeProps {
 const notice = (props: noticeProps) => {
     if (!notificationInstance) {
         console.log('notification不存在');
-        notificationInstance = createNotification();
+        notificationInstance = createNotification({});
     }
     return notificationInstance.addNotice(props);
 };
