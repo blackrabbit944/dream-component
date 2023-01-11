@@ -29,11 +29,13 @@ const Message = React.forwardRef<MessageRef, MessageBoxProps>((props, ref) => {
     // ========================= Refs =========================
     React.useImperativeHandle(ref, () => ({
         open: (config) => {
-            const key = String(new Date().getTime());
             if (!config['key']) {
-                config['key'] = key;
-                config['messageKey'] = key;
+                const newkey = String(new Date().getTime());
+                config['key'] = newkey;
+                config['messageKey'] = newkey;
             }
+
+            const { key } = config;
 
             console.log('debug-config', config);
             // config['onClose'] = () => {

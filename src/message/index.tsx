@@ -5,9 +5,10 @@ import { createRoot } from 'react-dom/client';
 
 import { createWrapperAndAppendToBody } from './../common/ReactPortal';
 import Message from './Message';
+import type { MessageBoxProps } from './MessageBox';
 
-let notification: any = null;
-let message_box_instance: any = null;
+let notificationInstance: any = null;
+let messageBoxRef: any = null;
 
 interface addNoticeProps {
     type: string;
@@ -17,7 +18,7 @@ interface addNoticeProps {
     key: string | null;
 }
 
-function createNotification() {
+function createNotification(props: MessageBoxProps = {}) {
     const wrapperId = 'react-portal-message-container';
     let element = document.getElementById(wrapperId);
     let systemCreated = false;
@@ -30,7 +31,7 @@ function createNotification() {
     }
 
     const setNotificationInstance = (element: any) => {
-        message_box_instance = element;
+        messageBoxRef = element;
     };
 
     const rooter = createRoot(element);
@@ -42,17 +43,18 @@ function createNotification() {
                 notice['key'] = String(new Date().getTime());
             }
 
-            if (!message_box_instance) {
+            if (!messageBoxRef) {
                 console.log('尚未初始化message_box_instance');
                 setTimeout(() => {
-                    notification.addNotice(notice);
+                    notificationInstance.addNotice(notice);
                 }, 200);
                 return () => {
-                    message_box_instance.close(notice['key']);
+                    console.log('debug:messageBoxRef', messageBoxRef);
+                    messageBoxRef.close(notice['key']);
                 };
             } else {
-                console.log('notice', notice);
-                return message_box_instance.open({
+                console.log('debug:messageBoxRef2', messageBoxRef);
+                return messageBoxRef.open({
                     ...notice
                 });
             }
@@ -71,16 +73,22 @@ interface noticeProps {
     during?: number;
     onClose?: () => void;
 }
+
 const notice = (props: noticeProps) => {
-    if (!notification) {
+    if (!notificationInstance) {
         console.log('notification不存在');
-        notification = createNotification();
+        notificationInstance = createNotification();
     }
-    // console.log('notification', notification);
-    return notification.addNotice(props);
+    return notificationInstance.addNotice(props);
 };
 
 export default {
+    init(props: MessageBoxProps): void {
+        if (!notificationInstance) {
+            notificationInstance = createNotification(props);
+        }
+        return notificationInstance;
+    },
     info(content: string, during?: number, onClose?: any): void {
         return notice({
             type: 'info',

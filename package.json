@@ -1,6 +1,6 @@
 {
     "name": "dream-component",
-    "version": "0.1.9",
+    "version": "0.1.10",
     "description": "dream-component,封装常用的button,modal,message组件",
     "repository": {
         "type": "git",
