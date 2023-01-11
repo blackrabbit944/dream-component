@@ -36,7 +36,7 @@ class ConfirmModalClass extends React.Component<ConfirmModalProps, ConfirmModalS
     static defaultProps = {
         width: 400,
         position: 'center',
-        zIndex: 100,
+        zIndex: 30,
         marginTop: 0,
         animation: 'slideIn',
         maskBgColor: '#000',

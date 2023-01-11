@@ -15,7 +15,7 @@ export interface MessageBoxProps {
 
 class MessageBox extends React.Component<MessageBoxProps> {
     static defaultProps = {
-        zIndex: 10,
+        zIndex: 50,
         position: 'topCenter',
         marginTop: '24px',
         maxWidth: 450

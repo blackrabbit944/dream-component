@@ -44,7 +44,7 @@ class ModalClass extends React.Component<ModalProps> {
         maskOpacity: 80,
         maskBgColor: '#000',
         maskCloseable: true,
-        zIndex: 50,
+        zIndex: 20,
         visible: false,
         position: 'center',
         marginTop: '0px',
