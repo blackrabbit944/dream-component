@@ -89,6 +89,7 @@ class ConfirmModalClass extends React.Component<ConfirmModalProps, ConfirmModalS
     }
 
     closeOnEscapeKeyDown(e: KeyboardEvent) {
+        if (this.state.visible == false) return;
         if (e.key === 'Escape') {
             this.hide();
             if (this.state.cancel) {

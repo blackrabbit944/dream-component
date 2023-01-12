@@ -87,6 +87,7 @@ class ModalClass extends React.Component<ModalProps> {
     }
 
     closeOnEscapeKeyDown(e: KeyboardEvent) {
+        if (this.props.visible == false) return;
         if (e.key === 'Escape') {
             this.props.onClose && this.props.onClose();
         }
