@@ -325,6 +325,14 @@ function App() {
                         <ButtonExample size={'large'}>提交内容</ButtonExample>
                     </div>
                 </div>
+
+                <div className="block-1" style={{ marginBottom: '40px' }}>
+                    <h2>按钮类型</h2>
+                    <div className="block-center-component">
+                        <ButtonExample submit={true}>提交内容</ButtonExample>
+                        <ButtonExample submit={false}>提交内容</ButtonExample>
+                    </div>
+                </div>
             </div>
         </div>
     );

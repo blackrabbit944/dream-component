@@ -13,6 +13,7 @@ export interface ButtonProps extends React.HTMLAttributes<any> {
     rounded?: boolean;
     full?: boolean;
     onClick?: (e: React.MouseEvent) => void;
+    submit?: boolean;
 }
 
 const LoadingSvg: React.FC<{ className: string }> = (props) => {
@@ -49,6 +50,7 @@ const ButtonClass: React.FC<ButtonProps> = (props) => {
         outline = false,
         rounded = false,
         full = false,
+        submit = false,
         ...restProps
     } = props;
 
@@ -71,6 +73,7 @@ const ButtonClass: React.FC<ButtonProps> = (props) => {
                     'full-width': full
                 }
             )}
+            type={submit ? 'submit' : 'button'}
             {...restProps}
         >
             {loading ? <LoadingSvg className="dream-btn-loading-icon" /> : null}
