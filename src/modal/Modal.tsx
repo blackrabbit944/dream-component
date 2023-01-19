@@ -63,10 +63,8 @@ class ModalClass extends React.Component<ModalProps, ModalState> {
     constructor(props: ModalProps) {
         super(props);
 
-        const is_set_el = typeof document == 'undefined' ? false : true;
-
         this.state = {
-            is_set_el: is_set_el
+            is_set_el: false
         };
 
         this.el = typeof document == 'undefined' ? null : document.createElement('div');
@@ -80,7 +78,7 @@ class ModalClass extends React.Component<ModalProps, ModalState> {
         document.addEventListener('keydown', this.closeOnEscapeKeyDown);
 
         //把el插入到modal的父组件中
-        if (!this.state.is_set_el || !this.el) {
+        if (!this.el) {
             this.el = document.createElement('div');
         }
 
