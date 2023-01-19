@@ -4,10 +4,10 @@ import { XMarkIcon } from '@heroicons/react/24/outline';
 import classNames from 'classnames';
 import { SyntheticEvent } from 'react';
 import React from 'react';
+import ReactDOM from 'react-dom';
 import { CSSTransition } from 'react-transition-group';
 
 import Button from './../button/Button';
-import ReactPortal from './../common/ReactPortal';
 import MaskBg from './../maskbg/MaskBg';
 
 export interface ModalProps {
@@ -54,16 +54,22 @@ class ModalClass extends React.Component<ModalProps> {
         confirmText: 'confirm'
     };
     modalRef: React.RefObject<HTMLDivElement>;
+    el: HTMLDivElement;
 
     constructor(props: ModalProps) {
         super(props);
         this.closeOnEscapeKeyDown = this.closeOnEscapeKeyDown.bind(this);
         this.modalRef = React.createRef();
+        this.el = document.createElement('div');
+        this.getModalParentNode = this.getModalParentNode.bind(this);
     }
 
     componentDidMount() {
         ///当按下ESC键的时候则自动关闭modal
         document.addEventListener('keydown', this.closeOnEscapeKeyDown);
+
+        //把el插入到modal的父组件中
+        this.getModalParentNode().appendChild(this.el);
     }
 
     componentDidUpdate(
@@ -84,6 +90,29 @@ class ModalClass extends React.Component<ModalProps> {
     componentWillUnmount(): void {
         //移除keydown的监听
         document.removeEventListener('keydown', this.closeOnEscapeKeyDown);
+
+        //把el移除从modal的父组件中
+        this.getModalParentNode().removeChild(this.el);
+    }
+
+    getModalParentNode(wrapperId = 'react-portal-modal-container'): HTMLElement {
+        let element = document.getElementById(wrapperId);
+        // if element is not found with wrapperId or wrapperId is not provided,
+        // create and append to body
+        if (!element) {
+            element = this.createModalParentNode(wrapperId);
+        } else {
+            console.log('modal-in:element存在因此不会自动创建', element, wrapperId);
+        }
+        return element;
+    }
+
+    createModalParentNode(wrapperId: string): HTMLElement {
+        console.log('modal-in:createModalParentNode', wrapperId);
+        const wrapperElement = document.createElement('div');
+        wrapperElement.setAttribute('id', wrapperId);
+        document.body.appendChild(wrapperElement);
+        return wrapperElement;
     }
 
     closeOnEscapeKeyDown(e: KeyboardEvent) {
@@ -145,90 +174,88 @@ class ModalClass extends React.Component<ModalProps> {
         // if (!visible) {
         //     return null;
         // }
+        return ReactDOM.createPortal(
+            <div className="mask">
+                <MaskBg
+                    visible={visible}
+                    bgColor={maskBgColor}
+                    zIndex={zIndex ? zIndex - 1 : 10}
+                    animation={animation}
+                />
 
-        return (
-            <ReactPortal wrapperId="react-portal-modal-container">
-                <div>
-                    <MaskBg
-                        visible={visible}
-                        bgColor={maskBgColor}
-                        zIndex={zIndex ? zIndex - 1 : 10}
-                        animation={animation}
-                    />
-
-                    <CSSTransition
-                        in={visible}
-                        timeout={300}
-                        unmountOnExit
-                        classNames={animation_class}
-                        nodeRef={this.modalRef}
-                        onEnter={() => console.log('fuck-enter')}
-                        onExited={() => console.log('fuck-exit')}
+                <CSSTransition
+                    in={visible}
+                    timeout={300}
+                    unmountOnExit
+                    classNames={animation_class}
+                    nodeRef={this.modalRef}
+                    onEnter={() => console.log('fuck-enter')}
+                    onExited={() => console.log('fuck-exit')}
+                >
+                    <div
+                        ref={this.modalRef}
+                        className={classNames(
+                            'dream-modal-wrapper',
+                            {
+                                center: position == 'center'
+                            },
+                            {
+                                top: position == 'top'
+                            }
+                        )}
+                        style={modalWrapperStyle}
+                        onClick={maskCloseable ? this.handleClose : undefined}
                     >
                         <div
                             ref={this.modalRef}
-                            className={classNames(
-                                'dream-modal-wrapper',
-                                {
-                                    center: position == 'center'
-                                },
-                                {
-                                    top: position == 'top'
-                                }
-                            )}
-                            style={modalWrapperStyle}
-                            onClick={maskCloseable ? this.handleClose : undefined}
+                            className={'dream-modal-box'}
+                            style={modalStyle}
+                            onClick={(e) => {
+                                e.stopPropagation();
+                            }}
                         >
-                            <div
-                                ref={this.modalRef}
-                                className={'dream-modal-box'}
-                                style={modalStyle}
-                                onClick={(e) => {
-                                    e.stopPropagation();
-                                }}
-                            >
-                                {title ? <div className="dream-modal-title">{title}</div> : null}
-                                <div className="dream-modal-content">{children}</div>
-                                {footer && <div className="dream-modal-footer">{footer}</div>}
-                                {useFooterButtonClose && (
-                                    <div className="dream-modal-footer">
-                                        <span className="btn-gap">
-                                            <Button
-                                                onClick={(e) => {
-                                                    this.handleClose(e);
-                                                    if (onCancel) {
-                                                        onCancel();
-                                                    }
-                                                }}
-                                            >
-                                                {cancelText}
-                                            </Button>
-                                        </span>
+                            {title ? <div className="dream-modal-title">{title}</div> : null}
+                            <div className="dream-modal-content">{children}</div>
+                            {footer && <div className="dream-modal-footer">{footer}</div>}
+                            {useFooterButtonClose && (
+                                <div className="dream-modal-footer">
+                                    <span className="btn-gap">
                                         <Button
-                                            type="primary"
-                                            onClick={() => {
-                                                if (onConfirm) {
-                                                    onConfirm();
+                                            onClick={(e) => {
+                                                this.handleClose(e);
+                                                if (onCancel) {
+                                                    onCancel();
                                                 }
                                             }}
                                         >
-                                            {confirmText}
+                                            {cancelText}
                                         </Button>
-                                    </div>
-                                )}
-                                {!useFooterButtonClose ? (
-                                    <div className="dream-modal-close-btn">
-                                        <XMarkIcon
-                                            className="dream-modal-close-icon"
-                                            onClick={this.handleClose}
-                                        />
-                                    </div>
-                                ) : null}
-                            </div>
+                                    </span>
+                                    <Button
+                                        type="primary"
+                                        onClick={() => {
+                                            if (onConfirm) {
+                                                onConfirm();
+                                            }
+                                        }}
+                                    >
+                                        {confirmText}
+                                    </Button>
+                                </div>
+                            )}
+                            {!useFooterButtonClose ? (
+                                <div className="dream-modal-close-btn">
+                                    <XMarkIcon
+                                        className="dream-modal-close-icon"
+                                        onClick={this.handleClose}
+                                    />
+                                </div>
+                            ) : null}
                         </div>
-                    </CSSTransition>
-                </div>
-            </ReactPortal>
+                    </div>
+                </CSSTransition>
+            </div>,
+            this.el
         );
     }
 }
