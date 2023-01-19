@@ -7,8 +7,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { CSSTransition } from 'react-transition-group';
 
-import Button from './../button/Button';
-import MaskBg from './../maskbg/MaskBg';
+import Button from '../button/Button';
+import MaskBg from '../maskbg/MaskBg';
 
 export interface ModalProps {
     onClose?: () => void; //关闭弹窗
@@ -39,7 +39,11 @@ export interface ModalProps {
     onConfirm?: () => void; //确认按钮的回调
 }
 
-class ModalClass extends React.Component<ModalProps> {
+interface ModalState {
+    is_set_el: boolean;
+}
+
+class ModalClass extends React.Component<ModalProps, ModalState> {
     static defaultProps = {
         maskOpacity: 80,
         maskBgColor: '#000',
@@ -54,13 +58,20 @@ class ModalClass extends React.Component<ModalProps> {
         confirmText: 'confirm'
     };
     modalRef: React.RefObject<HTMLDivElement>;
-    el: HTMLDivElement;
+    el: HTMLDivElement | null = null;
 
     constructor(props: ModalProps) {
         super(props);
+
+        const is_set_el = typeof document == 'undefined' ? false : true;
+
+        this.state = {
+            is_set_el: is_set_el
+        };
+
+        this.el = typeof document == 'undefined' ? null : document.createElement('div');
         this.closeOnEscapeKeyDown = this.closeOnEscapeKeyDown.bind(this);
         this.modalRef = React.createRef();
-        this.el = document.createElement('div');
         this.getModalParentNode = this.getModalParentNode.bind(this);
     }
 
@@ -69,12 +80,19 @@ class ModalClass extends React.Component<ModalProps> {
         document.addEventListener('keydown', this.closeOnEscapeKeyDown);
 
         //把el插入到modal的父组件中
+        if (!this.state.is_set_el || !this.el) {
+            this.el = document.createElement('div');
+        }
+
         this.getModalParentNode().appendChild(this.el);
+        this.setState({
+            is_set_el: true
+        });
     }
 
     componentDidUpdate(
         prevProps: Readonly<ModalProps>,
-        prevState: Readonly<ModalProps>,
+        prevState: Readonly<ModalState>,
         snapshot?: any
     ): void {
         ///当弹窗从不可见变为可见的时候,需要给body增加一个不可滚动的属性,当弹窗变为不可见的时候,需要移除这个属性
@@ -92,7 +110,9 @@ class ModalClass extends React.Component<ModalProps> {
         document.removeEventListener('keydown', this.closeOnEscapeKeyDown);
 
         //把el移除从modal的父组件中
-        this.getModalParentNode().removeChild(this.el);
+        if (this.el) {
+            this.getModalParentNode().removeChild(this.el);
+        }
     }
 
     getModalParentNode(wrapperId = 'react-portal-modal-container'): HTMLElement {
@@ -171,9 +191,12 @@ class ModalClass extends React.Component<ModalProps> {
         } else if (animation == 'slideIn') {
             animation_class = 'modal-slide-in';
         }
-        // if (!visible) {
-        //     return null;
-        // }
+
+        if (!this.state.is_set_el) {
+            console.log('debug:modal:因为this.el不存在所以不会渲染');
+            return null;
+        }
+
         return ReactDOM.createPortal(
             <div className="mask">
                 <MaskBg
@@ -189,8 +212,8 @@ class ModalClass extends React.Component<ModalProps> {
                     unmountOnExit
                     classNames={animation_class}
                     nodeRef={this.modalRef}
-                    onEnter={() => console.log('fuck-enter')}
-                    onExited={() => console.log('fuck-exit')}
+                    onEnter={() => console.log('modal-enter')}
+                    onExited={() => console.log('modal-exit')}
                 >
                     <div
                         ref={this.modalRef}
@@ -255,8 +278,9 @@ class ModalClass extends React.Component<ModalProps> {
                     </div>
                 </CSSTransition>
             </div>,
-            this.el
+            this.el ? this.el : document.createElement('div')
         );
     }
 }
+
 export default ModalClass;
