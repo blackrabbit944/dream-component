@@ -1,7 +1,5 @@
-// export type { MessageBoxProps } from './MessageBox';
-// export default MessageBox;
 import React from 'react';
-import { createRoot } from 'react-dom/client';
+import ReactDOM from 'react-dom/client';
 
 import { createWrapperAndAppendToBody } from './../common/ReactPortal';
 import Message from './Message';
@@ -34,7 +32,7 @@ function createNotification(props: MessageBoxProps = {}) {
         messageBoxRef = element;
     };
 
-    const rooter = createRoot(element);
+    const rooter = ReactDOM.createRoot(element);
     rooter.render(<Message ref={setNotificationInstance} {...props} />);
 
     return {

@@ -4,7 +4,8 @@ import { XMarkIcon } from '@heroicons/react/24/outline';
 import classNames from 'classnames';
 import { SyntheticEvent } from 'react';
 import React from 'react';
-import ReactDOM from 'react-dom';
+// import ReactDOM from 'react-dom/client';
+import { createPortal } from 'react-dom';
 import { CSSTransition } from 'react-transition-group';
 
 import Button from '../button/Button';
@@ -195,7 +196,7 @@ class ModalClass extends React.Component<ModalProps, ModalState> {
             return null;
         }
 
-        return ReactDOM.createPortal(
+        return createPortal(
             <div className="mask">
                 <MaskBg
                     visible={visible}

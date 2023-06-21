@@ -1,5 +1,5 @@
 import React from 'react';
-import { createRoot } from 'react-dom/client';
+import ReactDom from 'react-dom/client';
 
 import { createWrapperAndAppendToBody } from './../common/ReactPortal';
 import ConfirmModal from './ConfirmModal';
@@ -30,7 +30,7 @@ function createConfirmModalInstance(props: ConfirmModalProps) {
         confirmModalRef = element;
     };
 
-    const rooter = createRoot(element);
+    const rooter = ReactDom.createRoot(element);
 
     rooter.render(<ConfirmModal ref={setConfirmInstance} {...props} />);
 
