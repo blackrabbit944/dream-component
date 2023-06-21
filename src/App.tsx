@@ -11,7 +11,6 @@ import Modal, { ModalProps } from './../src/modal/index';
 const ModalExample: React.FC<ModalProps> = (props) => {
     const [visible, setVisible] = useState<boolean>(false);
 
-    Message.init({});
     return (
         <div className="App">
             <Button
